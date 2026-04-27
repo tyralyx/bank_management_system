@@ -51,3 +51,24 @@ CREATE TABLE "customer_loan" (
     FOREIGN KEY ("cust_id") REFERENCES "customer"("cust_id"),
     PRIMARY KEY ("cust_id","loan_id")
 );
+
+CREATE TABLE "transfer_history" (
+    "payment_id" number PRIMARY KEY NOT NULL,
+    "recepient_id" number,
+    "sender_id" number,
+    "amount" number(20,2),
+    "transfer_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "description" varchar2,
+    "status" varchar2 NOT NULL,
+    FOREIGN KEY ("recepient_id") REFERENCES "account"("account_number"),
+    FOREIGN KEY ("sender_id") REFERENCES "account"("account_number")
+);
+
+CREATE TABLE "loan_history" (
+    "cust_id" number,
+    "loan_id" number,
+    "loan_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "amount" number(20,2),
+    FOREIGN KEY ("cust_id") REFERENCES "customer"("cust_id"),
+    FOREIGN KEY ("loan_id") REFERENCES "loan"("loan_id")
+);
