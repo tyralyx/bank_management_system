@@ -12,9 +12,15 @@ BEGIN
     UPDATE "account"
     SET "balance" = "balance" + vLoanAmt
     WHERE "account_number" = pAccNumber;
+--LOGGING
+    INSERT INTO "loan_history" (
+        "cust_id", "loan_id", "amount"
+    ) VALUES (
+        vCustId, pLoanId, vLoanAmt
+    );
 --disp
     COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Loan disbursed into account.' || pAccNumber);
+    DBMS_OUTPUT.PUT_LINE('Loan disbursed into account ' || pAccNumber);
 
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
